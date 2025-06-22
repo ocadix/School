@@ -1,0 +1,171 @@
+﻿@page
+@model InscriptionModel
+@{
+    ViewData["Title"] = "Inscripción de Materias";
+}
+
+<h2>Estudiantes</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-page-handler="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="NewInscription.CodeStudent" class="form-label"></label>
+                <input asp-for="NewInscription.CodeStudent" class="form-control" />
+                <span asp-validation-for="NewInscription.CodeStudent" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="NewInscription.CodeSubjects" class="form-label"></label>
+                <input asp-for="NewInscription.CodeSubjects" class="form-control" type="number" />
+                <span asp-validation-for="NewInscription.CodeSubjects" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-3">Registrar Estudiante</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Código de estudiante</th>
+            <th>Nombre del estudiante</th>
+            <th>Numero de Documento</th>
+            <th>Email</th>
+            <th>Código de la Materia</th>
+            <th>Nombre de la Materia</th>
+            <th>Creditos de la Materia</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Inscriptions.Count; i++)
+        {
+            var inscriptions = Model.Inscriptions[i];
+            var isEditing = Model.EditingIndex == i;
+
+            <tr>
+                <form method="post" id="subjectRowForm_@i">
+                    <input type="hidden" name="EditingIndex" value="@i" />
+                <td>
+                    @if (isEditing)
+                    {
+                        @inscriptions.Code
+                        <input type="hidden" asp-for="EditingInscription.Code" value="@inscriptions.Code" />
+                    }
+                    else
+                    {
+                        @inscriptions.Code
+                        <input type="hidden" asp-for="EditingInscription.Code" value="@inscriptions.Code" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.CodeStudent" class="form-control" />
+                        <span asp-validation-for="EditingInscription.CodeStudent" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.CodeStudent
+                        <input type="hidden" asp-for="EditingInscription.CodeStudent" value="@inscriptions.CodeStudent" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.NameStudent" class="form-control" type="number" />
+                        <span asp-validation-for="EditingInscription.NameStudent" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.NameStudent
+                        <input type="hidden" asp-for="EditingInscription.NameStudent" value="@inscriptions.NameStudent" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.NumDocument" class="form-control" />
+                        <span asp-validation-for="EditingInscription.NumDocument" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.NumDocument
+                        <input type="hidden" asp-for="EditingInscription.NumDocument" value="@inscriptions.NumDocument" />
+                    }
+                </td>
+
+
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.Email" class="form-control" />
+                        <span asp-validation-for="EditingInscription.Email" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.Email
+                        <input type="hidden" asp-for="EditingInscription.Email" value="@inscriptions.Email" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.CodeSubjects" class="form-control" />
+                        <span asp-validation-for="EditingInscription.CodeSubjects" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.CodeSubjects
+                        <input type="hidden" asp-for="EditingInscription.CodeSubjects" value="@inscriptions.CodeSubjects" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.NameSubjects" class="form-control" />
+                        <span asp-validation-for="EditingInscription.NameSubjects" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.NameSubjects
+                        <input type="hidden" asp-for="EditingInscription.NameSubjects" value="@inscriptions.NameSubjects" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingInscription.Credits" class="form-control" />
+                        <span asp-validation-for="EditingInscription.Credits" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @inscriptions.Credits
+                        <input type="hidden" asp-for="EditingInscription.Credits" value="@inscriptions.Credits" />
+                    }
+                </td>
+                </form>
+                <td>
+                    <form method="post" asp-page-handler="Delete" class="d-inline" onsubmit="return confirm('¿Eliminar este estudiante?');">
+
+                        <input type="hidden" name="id" value="@inscriptions.Code" />
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>

@@ -1,0 +1,116 @@
+﻿@page
+@model SubjectsModel
+@{
+    ViewData["Title"] = "Materias";
+}
+
+<h2>Materias</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-page-handler="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="NewSubject.Name" class="form-label"></label>
+                <input asp-for="NewSubject.Name" class="form-control" />
+                <span asp-validation-for="NewSubject.Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="NewSubject.Credits" class="form-label"></label>
+                <input asp-for="NewSubject.Credits" class="form-control" type="number" />
+                <span asp-validation-for="NewSubject.Credits" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary mb-3">Registrar Materia</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nombre</th>
+            <th>Créditos</th>
+            <th>Editar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Subjects.Count; i++)
+        {
+            var subject = Model.Subjects[i];
+            var isEditing = Model.EditingIndex == i;
+
+            <tr>
+                <form method="post" id="subjectRowForm_@i">
+                    <input type="hidden" name="EditingIndex" value="@i" />
+                <td>
+                    @if (isEditing)
+                    {
+                        @subject.Code
+                        <input type="hidden" asp-for="EditingSubject.Code" value="@subject.Code" />
+                    }
+                    else
+                    {
+                        @subject.Code
+                        <input type="hidden" asp-for="EditingSubject.Code" value="@subject.Code" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingSubject.Name" class="form-control" />
+                        <span asp-validation-for="EditingSubject.Name" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @subject.Name
+                        <input type="hidden" asp-for="EditingSubject.Name" value="@subject.Name" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <input asp-for="EditingSubject.Credits" class="form-control" type="number" />
+                        <span asp-validation-for="EditingSubject.Credits" class="text-danger"></span>
+                    }
+                    else
+                    {
+                        @subject.Credits
+                        <input type="hidden" asp-for="EditingSubject.Credits" value="@subject.Credits" />
+                    }
+                </td>
+                <td>
+                    @if (isEditing)
+                    {
+                        <button type="submit" class="btn btn-success btn-sm" formaction="?handler=Save">Guardar</button>
+                        <button type="submit" class="btn btn-secondary btn-sm" formaction="?handler=CancelEdit">Cancelar</button>
+                    }
+                    else
+                    {
+
+                        <button type="submit" class="btn btn-warning btn-sm" formaction="?handler=Edit">Editar</button>
+                    }
+                </td>
+                </form>
+                <td>
+                    <form method="post" asp-page-handler="Delete" class="d-inline" onsubmit="return confirm('¿Eliminar esta materia?');">
+
+                        <input type="hidden" name="id" value="@subject.Code" />
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
