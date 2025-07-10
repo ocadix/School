@@ -42,7 +42,7 @@ namespace SchoolFronted.Pages
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri("https://localhost:7253/api/Subjects/DeleteSubjects"),
+                    RequestUri = new Uri("https://localhost:5158/api/Subjects/DeleteSubjects"),
                     Content = new StringContent(jsonString, Encoding.UTF8, "application/json")
                 };
 
@@ -87,7 +87,7 @@ namespace SchoolFronted.Pages
 
             try
             {
-                var response = await client.PostAsync("https://localhost:7253/api/Subjects/SaveOrUpdateSubjects", content);
+                var response = await client.PostAsync("https://localhost:5158/api/Subjects/SaveOrUpdateSubjects", content);
                 response.EnsureSuccessStatusCode();
 
                 NewSubject = new RegisterSubjectViewModel();
@@ -104,7 +104,7 @@ namespace SchoolFronted.Pages
         private async Task LoadSubjectsAsync()
         {
             var client = _clientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7253/api/Subjects/ListSubjects");
+            var response = await client.GetAsync("https://localhost:5158/api/Subjects/ListSubjects");
 
             if (response.IsSuccessStatusCode)
             {
@@ -143,7 +143,7 @@ namespace SchoolFronted.Pages
 
             try
             {
-                var response = await client.PostAsync("https://localhost:7253/api/Subjects/SaveOrUpdateSubjects", content);
+                var response = await client.PostAsync("https://localhost:5158/api/Subjects/SaveOrUpdateSubjects", content);
                 response.EnsureSuccessStatusCode();
 
                 EditingIndex = null;

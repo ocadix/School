@@ -21,7 +21,7 @@ namespace School.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, " Error en Guardar o Actualizar - SubjectsController Controller: " + e.Message.ToString());
+                return StatusCode(500, " Error en Guardar o Actualizar - SubjectsController Controller: " + e.Message);
             }
         }
 
@@ -36,7 +36,7 @@ namespace School.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, " Error en Eliminar - SubjectsController Controller: " + e.Message.ToString());
+                return StatusCode(500, " Error en Eliminar - SubjectsController Controller: " + e.Message);
             }
         }
 
@@ -51,22 +51,22 @@ namespace School.Controllers
             }
             catch (Exception e)
             {
-                return StatusCode(500, " Error en Listar - SubjectsController Controller: " + e.Message.ToString());
+                return StatusCode(500, " Error en Listar - SubjectsController Controller: " + e.Message);
             }
         }
 
         [HttpGet]
         [Route("ListSubjectsCredits")]
-        public async Task<IActionResult> ListSubjectsCredits(string Code)
+        public async Task<IActionResult> ListSubjectsCredits(string code)
         {
             try
             {
-                var response = await _subjects.ListSubjectsCredits(Code);
+                var response = await _subjects.ListSubjectsCredits(code);
                 return Ok(response);
             }
             catch (Exception e)
             {
-                return StatusCode(500, " Error en Listar - SubjectsController Controller: " + e.Message.ToString());
+                return StatusCode(500, " Error en Listar - SubjectsController Controller: " + e.Message);
             }
         }
 

@@ -17,7 +17,7 @@ namespace SchoolFronted.Pages
         public int? EditingIndex { get; set; }
 
         [BindProperty]
-        public RegisterSubjectViewModelStudent Newstudents { get; set; } = new RegisterSubjectViewModelStudent(); // Cambia el tipo aquí
+        public RegisterSubjectViewModelStudent Newstudents { get; set; } = new RegisterSubjectViewModelStudent(); // Cambia el tipo aquï¿½
 
         public List<Student> Students { get; set; } = [];
 
@@ -29,7 +29,7 @@ namespace SchoolFronted.Pages
         private async Task LoadStudentAsync()
         {
             var client = _clientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7253/api/Student/ListStudent");
+            var response = await client.GetAsync("https://localhost:5158/api/Student/ListStudent");
 
             if (response.IsSuccessStatusCode)
             {
@@ -46,7 +46,7 @@ namespace SchoolFronted.Pages
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    ModelState.AddModelError(string.Empty, "No se proporcionó un código de estudiante para eliminar.");
+                    ModelState.AddModelError(string.Empty, "No se proporcionï¿½ un cï¿½digo de estudiante para eliminar.");
                     await LoadStudentAsync();
                     return Page();
                 }
@@ -54,7 +54,7 @@ namespace SchoolFronted.Pages
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri("https://localhost:7253/api/Student/DeleteStudent"),
+                    RequestUri = new Uri("https://localhost:5158/api/Student/DeleteStudent"),
                     Content = new StringContent(jsonString, Encoding.UTF8, "application/json")
                 };
 
@@ -66,19 +66,19 @@ namespace SchoolFronted.Pages
             }
             catch (HttpRequestException ex)
             {
-                ModelState.AddModelError(string.Empty, $"Error al eliminar al estudiante: {ex.Message}. Verifique la conexión o el código del estudiante.");
+                ModelState.AddModelError(string.Empty, $"Error al eliminar al estudiante: {ex.Message}. Verifique la conexiï¿½n o el cï¿½digo del estudiante.");
                 await LoadStudentAsync();
                 return Page();
             }
             catch (JsonException ex)
             {
-                ModelState.AddModelError(string.Empty, $"Error de serialización/deserialización al eliminar: {ex.Message}");
+                ModelState.AddModelError(string.Empty, $"Error de serializaciï¿½n/deserializaciï¿½n al eliminar: {ex.Message}");
                 await LoadStudentAsync();
                 return Page();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, $"Ocurrió un error inesperado al eliminar: {ex.Message}");
+                ModelState.AddModelError(string.Empty, $"Ocurriï¿½ un error inesperado al eliminar: {ex.Message}");
                 await LoadStudentAsync();
                 return Page();
             }
@@ -100,7 +100,7 @@ namespace SchoolFronted.Pages
 
             try
             {
-                var response = await client.PostAsync("https://localhost:7253/api/Student/SaveOrUpdateStudent", content);
+                var response = await client.PostAsync("https://localhost:5158/api/Student/SaveOrUpdateStudent", content);
                 response.EnsureSuccessStatusCode();
 
                 Newstudents = new RegisterSubjectViewModelStudent();
@@ -131,7 +131,7 @@ namespace SchoolFronted.Pages
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Índice de edición inválido.");
+                ModelState.AddModelError(string.Empty, "ï¿½ndice de ediciï¿½n invï¿½lido.");
             }
             return Page();
         }
@@ -145,7 +145,7 @@ namespace SchoolFronted.Pages
 
             try
             {
-                var response = await client.PostAsync("https://localhost:7253/api/Student/SaveOrUpdateStudent", content);
+                var response = await client.PostAsync("https://localhost:5158/api/Student/SaveOrUpdateStudent", content);
                 response.EnsureSuccessStatusCode();
 
                 EditingIndex = null;

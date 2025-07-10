@@ -17,7 +17,7 @@ namespace SchoolFronted.Pages
         public int? EditingIndex { get; set; }
 
         [BindProperty]
-        public RegisterSubjectViewModelInscription NewInscription { get; set; } = new RegisterSubjectViewModelInscription(); // Cambia el tipo aquí
+        public RegisterSubjectViewModelInscription NewInscription { get; set; } = new RegisterSubjectViewModelInscription(); // Cambia el tipo aquï¿½
 
         public List<Inscription> Inscriptions { get; set; } = [];
 
@@ -29,7 +29,7 @@ namespace SchoolFronted.Pages
         private async Task LoadInscriptionAsync()
         {
             var client = _clientFactory.CreateClient();
-            var response = await client.GetAsync("https://localhost:7253/api/Inscription/ListInscription");
+            var response = await client.GetAsync("https://localhost:5158/api/Inscription/ListInscription");
 
             if (response.IsSuccessStatusCode)
             {
@@ -46,7 +46,7 @@ namespace SchoolFronted.Pages
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    ModelState.AddModelError(string.Empty, "No se proporcionó un código de inscripción para eliminar.");
+                    ModelState.AddModelError(string.Empty, "No se proporcionï¿½ un cï¿½digo de inscripciï¿½n para eliminar.");
                     await LoadInscriptionAsync();
                     return Page();
                 }
@@ -54,7 +54,7 @@ namespace SchoolFronted.Pages
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Delete,
-                    RequestUri = new Uri("https://localhost:7253/api/Inscription/DeleteInscription"),
+                    RequestUri = new Uri("https://localhost:5158/api/Inscription/DeleteInscription"),
                     Content = new StringContent(jsonString, Encoding.UTF8, "application/json")
                 };
 
@@ -66,19 +66,19 @@ namespace SchoolFronted.Pages
             }
             catch (HttpRequestException ex)
             {
-                ModelState.AddModelError(string.Empty, $"Error al eliminar la inscripción: {ex.Message}. Verifique la conexión o el código de la inscripción.");
+                ModelState.AddModelError(string.Empty, $"Error al eliminar la inscripciï¿½n: {ex.Message}. Verifique la conexiï¿½n o el cï¿½digo de la inscripciï¿½n.");
                 await LoadInscriptionAsync();
                 return Page();
             }
             catch (JsonException ex)
             {
-                ModelState.AddModelError(string.Empty, $"Error de serialización/deserialización al eliminar: {ex.Message}");
+                ModelState.AddModelError(string.Empty, $"Error de serializaciï¿½n/deserializaciï¿½n al eliminar: {ex.Message}");
                 await LoadInscriptionAsync();
                 return Page();
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, $"Ocurrió un error inesperado al eliminar: {ex.Message}");
+                ModelState.AddModelError(string.Empty, $"Ocurriï¿½ un error inesperado al eliminar: {ex.Message}");
                 await LoadInscriptionAsync();
                 return Page();
             }
@@ -87,7 +87,7 @@ namespace SchoolFronted.Pages
         public async Task<IActionResult> OnPostRegister()
         {
             if (NewInscription == null)
-                ModelState.AddModelError(string.Empty, $"Error al registrar la inscripcióm.");
+                ModelState.AddModelError(string.Empty, $"Error al registrar la inscripciï¿½m.");
 
 
             var client = _clientFactory.CreateClient();
@@ -96,7 +96,7 @@ namespace SchoolFronted.Pages
 
             try
             {
-                var response = await client.PostAsync("https://localhost:7253/api/Inscription/SaveOrUpdateInscription", content);
+                var response = await client.PostAsync("https://localhost:5158/api/Inscription/SaveOrUpdateInscription", content);
                 response.EnsureSuccessStatusCode();
 
                 NewInscription = new RegisterSubjectViewModelInscription();
